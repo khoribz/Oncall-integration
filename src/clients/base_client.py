@@ -58,14 +58,14 @@ class BaseClient:
 
     @api_wrapper(UpdateUserRequest)
     def update_user(self, request: UpdateUserRequest, name: str) -> None:
-        response = self.session.put(
+        self.session.put(
             url=f'{self.base_url}{self.api_url}{OncallRoutes.USERS}/{name}',
             headers=self.headers,
             data=request.model_dump_json()
         )
 
     @api_wrapper(BindUserRequest)
-    def bind_user(self, request: BindUserRequest, team: str, roster: str):
+    def bind_user(self, request: BindUserRequest, team: str, roster: str) -> None:
         self.session.post(
             url=(
                 f'{self.base_url}{self.api_url}{OncallRoutes.TEAMS}/{team}/{OncallRoutes.ROSTERS}/'
@@ -76,7 +76,7 @@ class BaseClient:
         )
 
     @api_wrapper(CreateEventRequest)
-    def create_event(self, request: CreateEventRequest):
+    def create_event(self, request: CreateEventRequest) -> None:
         self.session.post(
             url=f'{self.base_url}{self.api_url}{OncallRoutes.EVENTS}',
             headers=self.headers,
